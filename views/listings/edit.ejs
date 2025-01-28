@@ -1,0 +1,86 @@
+<%- layout("/layouts/boilerplate.ejs") -%>
+
+<body class="bg-light text-dark">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="text-center text-primary mb-4 fw-bold">Edit Listing</h1>
+
+                        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
+                            <!-- Title Field -->
+                            <div class="mb-3">
+                                <label for="title" class="form-label">
+                                    <i class="bi bi-house-door me-2"></i>Title
+                                </label>
+                                <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" id="title" required>
+                            </div>
+
+                            <!-- Description Field -->
+                            <div class="mb-3">
+                                <label for="description" class="form-label">
+                                    <i class="bi bi-card-text me-2"></i>Description
+                                </label>
+                                <textarea name="listing[description]" class="form-control" id="description" rows="4" required><%= listing.description %></textarea>
+                            </div>
+
+                            <!-- Image URL Field -->
+                            <div class="mb-3">
+                                <label for="image" class="form-label">
+                                    <i class="bi bi-image me-2"></i>Image URL
+                                </label>
+                                <input name="listing[image]" value="<%= listing.image %>" type="text" class="form-control" id="image" required>
+                                <div class="form-text">Current image preview:</div>
+                                <img src="<%= listing.image %>" alt="Current listing image" class="img-thumbnail mt-2" style="max-height: 200px;">
+                            </div>
+
+                            <!-- Price Field -->
+                            <div class="mb-3">
+                                <label for="price" class="form-label">
+                                    <i class="bi bi-currency-rupee me-2"></i>Price
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₹</span>
+                                    <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" id="price" required>
+                                </div>
+                            </div>
+
+                            <!-- Location Field -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">
+                                    <i class="bi bi-geo-alt me-2"></i>Location
+                                </label>
+                                <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control" id="location" required>
+                            </div>
+
+                            <!-- Country Field -->
+                            <div class="mb-3">
+                                <label for="country" class="form-label">
+                                    <i class="bi bi-globe me-2"></i>Country
+                                </label>
+                                <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control" id="country" required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Listing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap Icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</body>
