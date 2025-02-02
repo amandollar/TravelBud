@@ -8,13 +8,14 @@
                     <div class="card-body">
                         <h1 class="text-center text-primary mb-4 fw-bold">Edit Listing</h1>
 
-                        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
+                        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
                             <!-- Title Field -->
                             <div class="mb-3">
                                 <label for="title" class="form-label">
                                     <i class="bi bi-house-door me-2"></i>Title
                                 </label>
                                 <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" id="title" required>
+                                <div class="invalid-feedback">Enter Title</div>
                             </div>
 
                             <!-- Description Field -->
@@ -23,6 +24,7 @@
                                     <i class="bi bi-card-text me-2"></i>Description
                                 </label>
                                 <textarea name="listing[description]" class="form-control" id="description" rows="4" required><%= listing.description %></textarea>
+                                <div class="invalid-feedback">Enter Description</div>
                             </div>
 
                             <!-- Image URL Field -->
@@ -31,6 +33,7 @@
                                     <i class="bi bi-image me-2"></i>Image URL
                                 </label>
                                 <input name="listing[image]" value="<%= listing.image %>" type="text" class="form-control" id="image" required>
+                                <div class="invalid-feedback">Enter image URL or leave the same</div>
                                 <div class="form-text">Current image preview:</div>
                                 <img src="<%= listing.image %>" alt="Current listing image" class="img-thumbnail mt-2" style="max-height: 200px;">
                             </div>
@@ -43,6 +46,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text">₹</span>
                                     <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" id="price" required>
+                                    <div class="invalid-feedback">Enter new Price</div>
                                 </div>
                             </div>
 
@@ -52,6 +56,7 @@
                                     <i class="bi bi-geo-alt me-2"></i>Location
                                 </label>
                                 <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control" id="location" required>
+                                <div class="invalid-feedback">Enter location of the property</div>
                             </div>
 
                             <!-- Country Field -->
@@ -60,6 +65,7 @@
                                     <i class="bi bi-globe me-2"></i>Country
                                 </label>
                                 <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control" id="country" required>
+                                <div class="invalid-feedback">Enter Country</div>
                             </div>
 
                             <!-- Submit Button -->

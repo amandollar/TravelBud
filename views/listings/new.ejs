@@ -8,12 +8,13 @@
                     <div class="card-body">
                         <h1 class="text-center text-primary mb-4 fw-bold">Add a New Listing</h1>
 
-                        <form method="POST" action="/listings">
+                        <form method="POST" action="/listings" class="needs-validation" novalidate>
                             <div class="mb-3">
                                 <label for="title" class="form-label">
                                     <i class="bi bi-house-door me-2"></i>Title
                                 </label>
                                 <input name="listing[title]" id="title" placeholder="Enter title" type="text" class="form-control" required>
+                                <div class="invalid-feedback">Enter a cachy Title</div>
                             </div>
 
                             <div class="mb-3">
@@ -21,6 +22,7 @@
                                     <i class="bi bi-card-text me-2"></i>Description
                                 </label>
                                 <textarea name="listing[description]" id="description" placeholder="Enter a description" class="form-control" rows="4" required></textarea>
+                                <div class="invalid-feedback">Enter a shorter description</div>
                             </div>
 
                             <div class="mb-3">
@@ -28,15 +30,17 @@
                                     <i class="bi bi-image me-2"></i>Image URL
                                 </label>
                                 <input name="listing[image]" id="image" placeholder="Enter image URL" type="text" class="form-control" required>
+                                <div class="invalid-feedback">Enter a valid URL</div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="price" class="form-label">
-                                    <i class="bi bi-currency-dollar me-2"></i>Price
+                                    <i class="bi  me-2"></i>Price
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text">₹</span>
-                                    <input name="listing[price]" id="price" placeholder="Enter price" type="number" class="form-control" required>
+                                    <input name="listing[price]" id="price" placeholder="Enter price"  class="form-control" required>
+                                    <div class="invalid-feedback">Enter valid Price</div>
                                 </div>
                             </div>
 
@@ -45,6 +49,7 @@
                                     <i class="bi bi-globe me-2"></i>Country
                                 </label>
                                 <input name="listing[country]" id="country" placeholder="Enter country" type="text" class="form-control" required>
+                                <div class="invalid-feedback">Enter a valid country name</div>
                             </div>
 
                             <div class="mb-3">
@@ -52,6 +57,7 @@
                                     <i class="bi bi-geo-alt me-2"></i>Location
                                 </label>
                                 <input name="listing[location]" id="location" placeholder="Enter location" type="text" class="form-control" required>
+                                <div class="invalid-feedback">Enter a Location</div>
                             </div>
 
                             <div class="d-grid gap-2">
