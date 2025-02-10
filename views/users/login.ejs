@@ -1,0 +1,58 @@
+<%- layout("/layouts/boilerplate.ejs") -%>
+
+<body class="bg-light text-dark">
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg rounded-3">
+          <div class="card-body p-5">
+            <h1 class="text-center text-primary mb-4 fw-bold">Login to TravelBud</h1>
+
+            <form action="/login" method="POST" class="needs-validation" novalidate>
+              <div class="mb-4">
+                <label for="username" class="form-label fw-bold">
+                  <i class="bi bi-person me-2"></i>Username
+                </label>
+                <input name="username" id="username" placeholder="Enter username" type="text" class="form-control form-control-lg" required>
+                <div class="invalid-feedback">Please enter your username</div>
+              </div>
+
+              <div class="mb-4">
+                <label for="password" class="form-label fw-bold">
+                  <i class="bi bi-lock me-2"></i>Password
+                </label>
+                <input name="password" id="password" placeholder="Enter password" type="password" class="form-control form-control-lg" required>
+                <div class="invalid-feedback">Please enter your password</div>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg hover-scale">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="/signup" class="btn btn-outline-secondary btn-lg hover-scale">
+            <i class="bi bi-person-plus me-2"></i>Create an Account
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    .hover-scale {
+      transition: transform 0.3s ease;
+    }
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</body>

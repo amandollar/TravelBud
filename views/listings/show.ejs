@@ -1,78 +1,181 @@
 <% layout("/layouts/boilerplate.ejs") -%>
 
-<body class="bg-light text-dark">
+  <body class="bg-light text-dark">
     <div class="container my-5">
-        <h1 class="text-center text-primary mb-4 fw-bold"><%= listing.title %></h1>
+      <h1 class="text-center text-primary mb-4 fw-bold display-4">
+        <%= listing.title %>
+      </h1>
 
-        <!-- Listing Image -->
-        <div class="text-center mb-4">
-            <img src="<%= listing.image %>" alt="<%= listing.title %>" class="img-fluid rounded shadow-sm" style="max-width: 100%; height: auto;">
-        </div>
+      <!-- Listing Image -->
+      <div class="text-center mb-4">
+        <img src="<%= listing.image %>" alt="<%= listing.title %>" class="img-fluid rounded shadow-lg"
+          style="max-width: 100%; height: auto; max-height: 500px; object-fit: cover;">
+      </div>
 
-        <!-- Listing Details -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5 class="card-title text-primary mb-3">Property Details</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-card-text me-2"></i><strong>Description:</strong></span>
-                        <span class="text-muted"><%= listing.description %></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-currency-rupee me-2"></i><strong>Price:</strong></span>
-                        <span class="text-success fw-bold"><%= listing.price.toLocaleString("en-IN") %>&#8377;</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-geo-alt me-2"></i><strong>Location:</strong></span>
-                        <span class="text-muted"><%= listing.location %></span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-globe me-2"></i><strong>Country:</strong></span>
-                        <span class="text-muted"><%= listing.country %></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <!-- Listing Details -->
+      <div class="card shadow-lg mb-4">
+        <div class="card-body">
+          <h5 class="card-title text-primary mb-3 fw-bold">Property Details</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+              <span><i class="bi bi-person-circle me-2 text-secondary"></i><strong>Owner:</strong></span>
+              <span class="text-muted">
+                <%= listing.owner ? listing.owner.username : "Unknown Owner" %>
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+              <span><i class="bi bi-card-text me-2 text-primary"></i><strong>Description:</strong></span>
+              <span class="text-muted">
+                <%= listing.description %>
+              </span>
+            </li>
 
-        <!-- Amenities (assuming you have this data) -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5 class="card-title text-primary mb-3">Amenities</h5>
-                <div class="row">
-                    <div class="col-md-4 mb-2">
-                        <i class="bi bi-wifi me-2"></i> Free WiFi
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <i class="bi bi-p-square me-2"></i> Free Parking
-                    </div>
-                    <div class="col-md-4 mb-2">
-                        <i class="bi bi-tv me-2"></i> TV
-                    </div>
-                    <!-- Add more amenities as needed -->
-                </div>
-            </div>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+              <span><i class="bi bi-currency-dollar me-2 text-success"></i><strong>Price:</strong></span>
+              <span class="text-success fw-bold fs-4">
+                <%= listing.price.toLocaleString("en-IN") %>&#8377;
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+              <span><i class="bi bi-geo-alt me-2 text-danger"></i><strong>Location:</strong></span>
+              <span class="text-muted">
+                <%= listing.location %>
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+              <span><i class="bi bi-globe me-2 text-info"></i><strong>Country:</strong></span>
+              <span class="text-muted">
+                <%= listing.country %>
+              </span>
+            </li>
+          </ul>
         </div>
+      </div>
+
+      <% if(CurrUser && CurrUser._id.equals(listing.owner._id)){%>
 
         <!-- Edit/Delete Buttons -->
         <div class="d-flex justify-content-center mt-4">
-            <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning me-2">
-                <i class="bi bi-pencil me-2"></i>Edit
-            </a>
-            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline-block">
-                <button type="submit" class="btn btn-danger">
-                    <i class="bi bi-trash me-2"></i>Delete
-                </button>
-            </form>
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning me-2 hover-scale">
+            <i class="bi bi-pencil me-2"></i>Edit
+          </a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline-block">
+            <button type="submit" class="btn btn-danger hover-scale">
+              <i class="bi bi-trash me-2"></i>Delete
+            </button>
+          </form>
         </div>
 
-        <!-- Back to Listings Button -->
-        <div class="text-center mt-4">
-            <a href="/listings" class="btn btn-outline-primary">
-                <i class="bi bi-arrow-left me-2"></i>Back to All Listings
+        <%}%>
+
+          <!-- Rating Form -->
+          <div class="card shadow-lg mt-5">
+            <div class="card-body">
+              <h4 class="card-title text-primary mb-3 fw-bold">Leave a Review</h4>
+              <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+                <div class="mb-3">
+                  <label for="rating" class="form-label fw-bold">
+                    <i class="bi bi-star-fill me-2 text-warning"></i> Rating
+                  </label>
+                  <select class="form-select form-select-lg" id="rating" name="review[rating]" required>
+                    <option value="">Select a rating</option>
+                    <option value="1">⭐ Poor</option>
+                    <option value="2">⭐⭐ Fair</option>
+                    <option value="3">⭐⭐⭐ Good</option>
+                    <option value="4">⭐⭐⭐⭐ Very Good</option>
+                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                  </select>
+                  <div class="invalid-feedback">Please select a rating</div>
+                </div>
+                <div class="mb-3">
+                  <label for="comment" class="form-label fw-bold">
+                    <i class="bi bi-chat-text me-2 text-primary"></i> Comment
+                  </label>
+                  <textarea class="form-control form-control-lg" name="review[comment]" id="comment" rows="4"
+                    placeholder="Write your review here..." required></textarea>
+                  <div class="invalid-feedback">Please enter a comment</div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success btn-lg hover-scale">
+                    <i class="bi bi-send me-2"></i>Submit Review
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Show Reviews -->
+          <div class="card shadow-lg mt-5">
+            <div class="card-body">
+              <h4 class="card-title text-primary mb-3 fw-bold">
+                <i class="bi bi-chat-left-text me-2"></i>All Reviews
+              </h4>
+
+              <% if (listing.reviews.length===0) { %>
+                <div class="alert alert-info text-center" role="alert">
+                  <i class="bi bi-info-circle me-2"></i> No reviews yet. Be the first to review!
+                </div>
+                <% } else { %>
+                  <div class="list-group">
+                    <% for (review of listing.reviews) { %>
+                      <div class="card mb-3 border-0 shadow-sm hover-scale">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                              <i class="bi bi-person-circle text-secondary me-2" style="font-size: 2rem;"></i>
+                              <h6 class="mb-0 fw-bold text-dark">Anonymous User</h6>
+                            </div>
+                            <!-- Delete Button -->
+                            <form method="POST"
+                              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                              <button type="submit" class="btn btn-sm btn-outline-danger hover-scale">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </form>
+                          </div>
+
+                          <p class="text-muted mt-2">
+                            <%= review.comment %>
+                          </p>
+
+                          <div>
+                            <span class="text-warning fs-5">
+                              <% for (let i=0; i < review.rating; i++) { %>⭐<% } %>
+                            </span>
+                            <span class="text-muted ms-2">(<%= review.rating %>/5)</span>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- Back to Listings Button -->
+          <div class="text-center mt-4">
+            <a href="/listings" class="btn btn-outline-primary btn-lg hover-scale">
+              <i class="bi bi-arrow-left me-2"></i>Back to All Listings
             </a>
-        </div>
+          </div>
     </div>
 
-    <!-- Add Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-</body>
+    <style>
+      .hover-scale {
+        transition: transform 0.3s ease;
+      }
+
+      .hover-scale:hover {
+        transform: scale(1.05);
+      }
+
+      .card {
+        transition: box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      }
+    </style>
+  </body>
