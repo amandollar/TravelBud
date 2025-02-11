@@ -1,9 +1,12 @@
 const Listings = require("../models/listings");
 
 
-
 module.exports.index = async (req, res) => {
-    let allListings = await Listings.find({});
+    let searchQuery = req.query.search;
+    let allListings = searchQuery?
+    await Listings.find({title:{$regex:searchQuery,$options: 'i'}})
+    : await Listings.find({});
+
     res.render("listings/index.ejs", { allListings });
 }
 

@@ -7,8 +7,8 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-8">
                 <div class="input-group input-group-lg shadow-lg rounded-pill overflow-hidden">
-                    <input type="text" class="form-control border-0 py-3" placeholder="Search for your perfect stay..." aria-label="Search for listings">
-                    <button class="btn btn-primary px-4" type="button">
+                    <input type="text" class="form-control border-0 py-3" placeholder="Search for your perfect stay..." aria-label="Search for listings" id="searchInput">
+                    <button class="btn btn-primary px-4" type="button" id="searchButton">
                         <i class="bi bi-search"></i> Search
                     </button>
                 </div>
@@ -53,10 +53,19 @@
             <% } %>
         </div>
     </div>
+    <script>
 
-    <!-- Add Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <!-- Add Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        document.getElementById("searchButton").addEventListener("click",function(){
+            const query = document.getElementById("searchInput").value.trim();
+            if (query) {
+                window.location.href = `/listings?search=${encodeURIComponent(query)}`;
+            }
 
+            document.getElementById("searchInput").addEventListener('keypress',function(event){
+                if(event.key == 'Enter'){
+                    document.getElementById("searchButton").click();
+                }
+            })
+        })
+    </script>
 </body>
