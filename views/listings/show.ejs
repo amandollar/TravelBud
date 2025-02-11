@@ -8,7 +8,7 @@
 
       <!-- Listing Image -->
       <div class="text-center mb-4">
-        <img src="<%= listing.image %>" alt="<%= listing.title %>" class="img-fluid rounded shadow-lg"
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid rounded shadow-lg"
           style="max-width: 100%; height: auto; max-height: 500px; object-fit: cover;">
       </div>
 
@@ -66,116 +66,105 @@
             </button>
           </form>
         </div>
-
         <%}%>
 
-          <!-- Rating Form -->
-          <div class="card shadow-lg mt-5">
-            <div class="card-body">
-              <h4 class="card-title text-primary mb-3 fw-bold">Leave a Review</h4>
-              <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
-                <div class="mb-3">
-                  <label for="rating" class="form-label fw-bold">
-                    <i class="bi bi-star-fill me-2 text-warning"></i> Rating
-                  </label>
-                  <select class="form-select form-select-lg" id="rating" name="review[rating]" required>
-                    <option value="">Select a rating</option>
-                    <option value="1">⭐ Poor</option>
-                    <option value="2">⭐⭐ Fair</option>
-                    <option value="3">⭐⭐⭐ Good</option>
-                    <option value="4">⭐⭐⭐⭐ Very Good</option>
-                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                  </select>
-                  <div class="invalid-feedback">Please select a rating</div>
-                </div>
-                <div class="mb-3">
-                  <label for="comment" class="form-label fw-bold">
-                    <i class="bi bi-chat-text me-2 text-primary"></i> Comment
-                  </label>
-                  <textarea class="form-control form-control-lg" name="review[comment]" id="comment" rows="4"
-                    placeholder="Write your review here..." required></textarea>
-                  <div class="invalid-feedback">Please enter a comment</div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-success btn-lg hover-scale">
-                    <i class="bi bi-send me-2"></i>Submit Review
-                  </button>
-                </div>
-              </form>
+
+          <% if(CurrUser){ %>
+            <!-- Rating Form -->
+            <div class="card shadow-lg mt-5">
+              <div class="card-body">
+                <h4 class="card-title text-primary mb-3 fw-bold">Leave a Review</h4>
+                <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+                  <div class="mb-3">
+                    <label for="rating" class="form-label fw-bold">
+                      <i class="bi bi-star-fill me-2 text-warning"></i> Rating
+                    </label>
+                    <select class="form-select form-select-lg" id="rating" name="review[rating]" required>
+                      <option value="">Select a rating</option>
+                      <option value="1">⭐ Poor</option>
+                      <option value="2">⭐⭐ Fair</option>
+                      <option value="3">⭐⭐⭐ Good</option>
+                      <option value="4">⭐⭐⭐⭐ Very Good</option>
+                      <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a rating</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="comment" class="form-label fw-bold">
+                      <i class="bi bi-chat-text me-2 text-primary"></i> Comment
+                    </label>
+                    <textarea class="form-control form-control-lg" name="review[comment]" id="comment" rows="4"
+                      placeholder="Write your review here..." required></textarea>
+                    <div class="invalid-feedback">Please enter a comment</div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg hover-scale">
+                      <i class="bi bi-send me-2"></i>Submit Review
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
 
-          <!-- Show Reviews -->
-          <div class="card shadow-lg mt-5">
-            <div class="card-body">
-              <h4 class="card-title text-primary mb-3 fw-bold">
-                <i class="bi bi-chat-left-text me-2"></i>All Reviews
-              </h4>
+            <!-- Show Reviews -->
+            <div class="card shadow-lg mt-5">
+              <div class="card-body">
+                <h4 class="card-title text-primary mb-3 fw-bold">
+                  <i class="bi bi-chat-left-text me-2"></i>All Reviews
+                </h4>
 
-              <% if (listing.reviews.length===0) { %>
-                <div class="alert alert-info text-center" role="alert">
-                  <i class="bi bi-info-circle me-2"></i> No reviews yet. Be the first to review!
-                </div>
-                <% } else { %>
-                  <div class="list-group">
-                    <% for (review of listing.reviews) { %>
-                      <div class="card mb-3 border-0 shadow-sm hover-scale">
-                        <div class="card-body">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                              <i class="bi bi-person-circle text-secondary me-2" style="font-size: 2rem;"></i>
-                              <h6 class="mb-0 fw-bold text-dark">Anonymous User</h6>
+                <% if (listing.reviews.length===0) { %>
+                  <div class="alert alert-info text-center" role="alert">
+                    <i class="bi bi-info-circle me-2"></i> No reviews yet. Be the first to review!
+                  </div>
+                  <% } else { %>
+                    <div class="list-group">
+                      <% for (review of listing.reviews) { %>
+                        <div class="card mb-3 border-0 shadow-sm hover-scale">
+                          <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle text-secondary me-2" style="font-size: 2rem;"></i>
+                                <h6 class="mb-0 fw-bold text-dark">
+                                  👨🏻‍💼<%= review.author.username %>
+                                </h6>
+                              </div>
+                              <!-- Delete Button -->
+                              <form method="POST"
+                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                <button type="submit" class="btn btn-sm btn-outline-danger hover-scale">
+                                  <i class="bi bi-trash">Delete</i>
+                                </button>
+                              </form>
                             </div>
-                            <!-- Delete Button -->
-                            <form method="POST"
-                              action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-                              <button type="submit" class="btn btn-sm btn-outline-danger hover-scale">
-                                <i class="bi bi-trash"></i>
-                              </button>
-                            </form>
-                          </div>
 
-                          <p class="text-muted mt-2">
-                            <%= review.comment %>
-                          </p>
+                            <p class="text-muted mt-2">
+                              <%= review.comment %>
+                            </p>
 
-                          <div>
-                            <span class="text-warning fs-5">
-                              <% for (let i=0; i < review.rating; i++) { %>⭐<% } %>
-                            </span>
-                            <span class="text-muted ms-2">(<%= review.rating %>/5)</span>
+                            <div>
+                              <span class="text-warning fs-5">
+                                <% for (let i=0; i < review.rating; i++) { %>⭐<% } %>
+                              </span>
+                              <span class="text-muted ms-2">(<%= review.rating %>/5)</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <% } %>
-                  </div>
-                  <% } %>
+                        <% } %>
+                    </div>
+                    <% } %>
+              </div>
             </div>
-          </div>
 
-          <!-- Back to Listings Button -->
-          <div class="text-center mt-4">
-            <a href="/listings" class="btn btn-outline-primary btn-lg hover-scale">
-              <i class="bi bi-arrow-left me-2"></i>Back to All Listings
-            </a>
-          </div>
+            <%}%>
+
+
+              <!-- Back to Listings Button -->
+              <div class="text-center mt-4">
+                <a href="/listings" class="btn btn-outline-primary btn-lg hover-scale">
+                  <i class="bi bi-arrow-left me-2"></i>Back to All Listings
+                </a>
+              </div>
     </div>
 
-    <style>
-      .hover-scale {
-        transition: transform 0.3s ease;
-      }
-
-      .hover-scale:hover {
-        transform: scale(1.05);
-      }
-
-      .card {
-        transition: box-shadow 0.3s ease;
-      }
-
-      .card:hover {
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-      }
-    </style>
   </body>

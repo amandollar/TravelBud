@@ -2,6 +2,7 @@ const Listings = require("./models/listings");
 const ExpressError = require("./utils/ExpressError");
 const { listingSchema } = require("./schema");
 const {reivewSchema} = require("./schema");
+const Review = require("./models/review");
 
 module.exports.isLoggedIn = (req,res,next)=>{
     console.log(req.user);
@@ -29,7 +30,7 @@ module.exports.isOwner = async(req,res,next) =>{
     let listing = await Listings.findById(id)
     if(!listing.owner.equals(res.locals.CurrUser._id)){
         req.flash("error","You don't have permmission");
-        return res.redirect(`listings/${id}`);
+        return res.redirect(`/listings/${id}`);
     }
 
     next();
@@ -56,4 +57,21 @@ module.exports.validateReview = (req,res,next)=>{
     }else{
         next();
     }
+}
+
+
+module.exports.isReviewAuthor = async(req,res,next) =>{
+    let {id,reviewId} = req.params;
+    let review = await Review.findById(reviewId)
+    if(!review.author.equals(res.locals.CurrUser._id)){
+        
+        req.flash("error","You don't have permmission");
+        return res.redirect(`/listings/${id}`);
+       
+    }
+        
+    next();
+    
+
+    
 }

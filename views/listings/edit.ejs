@@ -1,102 +1,93 @@
 <%- layout("/layouts/boilerplate.ejs") -%>
 
-<body class="bg-light text-dark">
-  <div class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <div class="card shadow-lg rounded-3">
-          <div class="card-body p-5">
-            <h1 class="text-center text-primary mb-4 fw-bold">Edit Listing</h1>
+  <body class="bg-light text-dark">
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-lg rounded-3">
+            <div class="card-body p-5">
+              <h1 class="text-center text-primary mb-4 fw-bold">Edit Listing</h1>
 
-            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
-              <!-- Title Field -->
-              <div class="mb-4">
-                <label for="title" class="form-label fw-bold">
-                  <i class="bi bi-house-door me-2"></i>Title
-                </label>
-                <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control form-control-lg" id="title" required>
-                <div class="invalid-feedback">Please enter a title</div>
-              </div>
-
-              <!-- Description Field -->
-              <div class="mb-4">
-                <label for="description" class="form-label fw-bold">
-                  <i class="bi bi-card-text me-2"></i>Description
-                </label>
-                <textarea name="listing[description]" class="form-control form-control-lg" id="description" rows="4" required><%= listing.description %></textarea>
-                <div class="invalid-feedback">Please enter a description</div>
-              </div>
-
-              <!-- Image URL Field -->
-              <div class="mb-4">
-                <label for="image" class="form-label fw-bold">
-                  <i class="bi bi-image me-2"></i>Image URL
-                </label>
-                <input name="listing[image]" value="<%= listing.image %>" type="text" class="form-control form-control-lg" id="image" required>
-                <div class="invalid-feedback">Please enter an image URL</div>
-                <div class="form-text mt-2">Current image preview:</div>
-                <img src="<%= listing.image %>" alt="Current listing image" class="img-thumbnail mt-2" style="max-height: 200px;">
-              </div>
-
-              <!-- Price Field -->
-              <div class="mb-4">
-                <label for="price" class="form-label fw-bold">
-                  <i class="bi bi-currency-rupee me-2"></i>Price
-                </label>
-                <div class="input-group input-group-lg">
-                  <span class="input-group-text">₹</span>
-                  <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" id="price" required>
-                  <div class="invalid-feedback">Please enter a valid price</div>
+              <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+                <!-- Title Field -->
+                <div class="mb-4">
+                  <label for="title" class="form-label fw-bold">
+                    <i class="bi bi-house-door me-2"></i>Title
+                  </label>
+                  <input name="listing[title]" value="<%= listing.title %>" type="text"
+                    class="form-control form-control-lg" id="title" required>
+                  <div class="invalid-feedback">Please enter a title</div>
                 </div>
-              </div>
 
-              <!-- Location Field -->
-              <div class="mb-4">
-                <label for="location" class="form-label fw-bold">
-                  <i class="bi bi-geo-alt me-2"></i>Location
-                </label>
-                <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control form-control-lg" id="location" required>
-                <div class="invalid-feedback">Please enter a location</div>
-              </div>
+                <!-- Description Field -->
+                <div class="mb-4">
+                  <label for="description" class="form-label fw-bold">
+                    <i class="bi bi-card-text me-2"></i>Description
+                  </label>
+                  <textarea name="listing[description]" class="form-control form-control-lg" id="description" rows="4"
+                    required><%= listing.description %></textarea>
+                  <div class="invalid-feedback">Please enter a description</div>
+                </div>
 
-              <!-- Country Field -->
-              <div class="mb-4">
-                <label for="country" class="form-label fw-bold">
-                  <i class="bi bi-globe me-2"></i>Country
-                </label>
-                <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control form-control-lg" id="country" required>
-                <div class="invalid-feedback">Please enter a country</div>
-              </div>
+                <!-- Image  Field -->
+                <div class="mb-4">
+                  <label for="image" class="form-label fw-bold">
+                    <i class="bi bi-image me-2"></i>Upload Image
+                  </label>
+                  <input name="listing[image]" id="image" placeholder="Enter image URL" type="file"
+                    class="form-control form-control-lg">
+                  <div class="invalid-feedback">Please enter a valid image file</div>
+                </div>
 
-              <!-- Submit Button -->
-              <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary btn-lg hover-scale">
-                  <i class="bi bi-check-circle me-2"></i>Save Changes
-                </button>
-              </div>
-            </form>
+                <!-- Price Field -->
+                <div class="mb-4">
+                  <label for="price" class="form-label fw-bold">
+                    <i class="bi bi-currency-rupee me-2"></i>Price
+                  </label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text">₹</span>
+                    <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control"
+                      id="price" required>
+                    <div class="invalid-feedback">Please enter a valid price</div>
+                  </div>
+                </div>
+
+                <!-- Location Field -->
+                <div class="mb-4">
+                  <label for="location" class="form-label fw-bold">
+                    <i class="bi bi-geo-alt me-2"></i>Location
+                  </label>
+                  <input name="listing[location]" value="<%= listing.location %>" type="text"
+                    class="form-control form-control-lg" id="location" required>
+                  <div class="invalid-feedback">Please enter a location</div>
+                </div>
+
+                <!-- Country Field -->
+                <div class="mb-4">
+                  <label for="country" class="form-label fw-bold">
+                    <i class="bi bi-globe me-2"></i>Country
+                  </label>
+                  <input name="listing[country]" value="<%= listing.country %>" type="text"
+                    class="form-control form-control-lg" id="country" required>
+                  <div class="invalid-feedback">Please enter a country</div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary btn-lg hover-scale">
+                    <i class="bi bi-check-circle me-2"></i>Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
 
-        <div class="text-center mt-4">
-          <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary btn-lg hover-scale">
-            <i class="bi bi-arrow-left me-2"></i>Back to Listing
-          </a>
+          <div class="text-center mt-4">
+            <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary btn-lg hover-scale">
+              <i class="bi bi-arrow-left me-2"></i>Back to Listing
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <style>
-    .form-control:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    }
-    .hover-scale {
-      transition: transform 0.3s ease;
-    }
-    .hover-scale:hover {
-      transform: scale(1.05);
-    }
-  </style>
-</body>
+  </body>

@@ -12,10 +12,8 @@ const listingSchema = new Schema({
         required:true
     },
     image:{
-        type:String,
-        default:"https://cdn.pixabay.com/photo/2024/09/15/21/50/house-plans-9050076_640.png",
-        set:(v) => v == ""?"https://cdn.pixabay.com/photo/2024/09/15/21/50/house-plans-9050076_640.png":v
-
+        url:String,
+        filename:String
     },
     price:{
         type:Number
