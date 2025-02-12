@@ -1,7 +1,6 @@
 if(process.env.NODE_ENV != "production"){
     require('dotenv').config();
 }
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -13,12 +12,15 @@ const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
-const URI = "mongodb://localhost:27017/travelbud";
+
+
+const URL = process.env.MONGO_URI;
 
 
 
@@ -28,8 +30,9 @@ main().then(() => {
     console.log(err);
 });
 
+
 async function main() {
-    await mongoose.connect(URI);
+    await mongoose.connect(URL);
 }
 
 
@@ -41,8 +44,22 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")))
 
 
+const store = MongoStore.create({
+    mongoUrl:URL,
+    crypto:{
+       secret:"mysupersecretcode"
+    },
+
+    touchAfter: 24 * 60 * 60
+})
+
+
+store.on("error",()=>{
+    console.log("Error in mongo session store",err);
+})
 
 const sessionOptions = {
+    store:store,
     secret:"mysupersecretcode",
     resave:false,
     saveUninitialized: true,
@@ -54,9 +71,10 @@ const sessionOptions = {
 }
 
 
-app.get("/", (req, res) => {
-    res.send("Root");
-})
+// app.get("/", (req, res) => {
+//     res.send("Root");
+// })
+
 
 
 
