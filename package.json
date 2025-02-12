@@ -1,4 +1,8 @@
+
 {
+  "engines":{
+    "node": "22.13.1"
+  },
   "name": "travelbud",
   "version": "1.0.0",
   "main": "index.js",
